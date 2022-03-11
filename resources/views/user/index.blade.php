@@ -12,38 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- start script search​ --}}
-    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript"
-        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" class="init">
-        function filterGlobal() {
-            $('#user_list').DataTable().search(
-                $('#global_filter').val(),
-                $('#global_regex').prop('checked'),
-                $('#global_smart').prop('checked')
-            ).draw();
-        }
 
-        function filterColumn(i) {
-            $('#user_list').DataTable().column(i).search(
-                $('#col' + i + '_filter').val(),
-                $('#col' + i + '_regex').prop('checked'),
-                $('#col' + i + '_smart').prop('checked')
-            ).draw();
-        }
-
-        $(document).ready(function() {
-            $('#user_list').DataTable();
-
-            $('input.global_filter').on('keyup click', function() {
-                filterGlobal();
-            });
-
-            $('input.column_filter').on('keyup click', function() {
-                filterColumn($(this).parents('tr').attr('data-column'));
-            });
-        });
-    </script>
     {{-- end script search​ --}}
 </head>
 
@@ -52,47 +21,19 @@
     <div class="container">
         <div class="table-responsive">
             {{-- start table user search --}}
-            <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
-                <thead>
-                    <tr>
-                        <th>Target</th>
-                        <th>Search text</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="filter_global">
-                        <td>Global search</td>
-                        <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
-                    </tr>
-                    <tr id="filter_col1" data-column="0">
-                        <td>Column - Họ tên</td>
-                        <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
-                    </tr>
-                    <tr id="filter_col2" data-column="1">
-                        <td>Column - Giới tính</td>
-                        <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
-                    </tr>
-                    <tr id="filter_col3" data-column="2">
-                        <td>Column - Ngày sinh</td>
-                        <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
-                    </tr>
-                    <tr id="filter_col4" data-column="3">
-                        <td>Column - Số điện thoại</td>
-                        <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
-                    </tr>
-                    <tr id="filter_col5" data-column="4">
-                        <td>Column - Địa chỉ</td>
-                        <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="" method="GET" style="float: right; width: 50%">
+                <div class="input-group">
+                    <input type="search" class="form-control rounded" name="key" placeholder="Search" aria-label="Search" />
+                    <button type="submit" class="btn btn-outline-primary">search</button>
+                </div>
+            </form>
             {{-- end table user search --}}
-            <a href="#" class="btn btn-success btn-add" data-target="#modal-add" data-toggle="modal">Add</a>
+            <a href="#"  class="btn btn-success btn-add" data-target="#modal-add" data-toggle="modal">Add</a>
             <div>
                 <br>
             </div>
             {{-- table user list --}}
-            <table class="table table-hover" id="user_list">
+            <table class="table table-hover" id="userlist">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -115,8 +56,7 @@
                             <td id="diachi-{{ $user->id }}">{{ $user->diachi }}</td>
                             <td>
                                 <button data-url="{{ route('user.show', $user->id) }}" ​ type="button"
-                                    data-target="#show" data-toggle="modal"
-                                    class="btn btn-info btn-show">Detail</button>
+                                    data-target="#show" data-toggle="modal" class="btn btn-info btn-show">Detail</button>
                                 <button data-url="{{ route('user.update', $user->id) }}" ​ type="button"
                                     data-target="#edit" data-toggle="modal"
                                     class="btn btn-warning btn-edit">Edit</button>

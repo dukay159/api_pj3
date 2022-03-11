@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 #user
 Route::resource('user', UserController::class);
+
+

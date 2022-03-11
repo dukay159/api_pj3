@@ -15,6 +15,12 @@ class UserController extends Controller
     public function index()
     {
         $users = InforUser::orderBy('id','desc')->get();
+        if($key = request()->key){
+            $users = InforUser::orderBy('id','DESC')->where('hoten','like','%'.$key.'%')
+                                                                ->orWhere('diachi','like','%'.$key.'%')                    
+                                                                ->orWhere('sdt',$key)
+                                                                ->paginate(5);
+        }
 
         return view('user.index',[
             'users' => $users,
@@ -93,5 +99,5 @@ class UserController extends Controller
     {
         InforUser::find($id)->delete();
         return response()->json(['data'=>'removed'],200);
-    }
+    }  
 }
